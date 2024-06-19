@@ -1,10 +1,11 @@
-FILE_lex=	B103040059.l
-PROG_lex=	lex.yy.c
-all:	$(PROG_lex)
-	gcc $(PROG_lex) -lfl
+all:	clean y.tab.c lex.yy.c
+	gcc lex.yy.c y.tab.c -lfl -o pars
 
-$(PROG_lex):	$(FILE_lex)
-	flex -i $(FILE_lex)
+y.tab.c:
+	bison -y -d B103040059.y
+
+lex.yy.c:
+	flex -i B103040059.l
 
 clean:
-	rm a.out $(PROG_lex)
+	rm -f pars lex.yy.c y.tab.c y.tab.h
